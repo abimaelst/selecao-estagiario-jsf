@@ -17,6 +17,7 @@ import com.planner.empresarial.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
+
 public class CadastroProdutoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
