@@ -5,16 +5,35 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
 	font-weight: normal;
+	background-color: #086972 !important;
+	color: #071a52;
 }
 
-
-header {
-	padding: 5px 0px;
-	margin-bottom: 20px;
+ img {
 	height: 30px;
+	border-radius: 8px;
+	border: 2px solid #086972;
+	margin-top: 3px;
+}
+
+span img {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+.UsuarioText {
 	
-	background-color: #545454;	color: #fff;
+	margin-bottom: 10px;
+}
+header {
 	
+	margin-bottom: 20px;
+	height: 40px;
+	
+	background-color: #17b978;	
+	color: #071a52;
+	align-items: center;
 	box-shadow: 0px 2px 2px #ccc;
 }
 
@@ -87,6 +106,26 @@ h1 {
 }
 
 /* Customiza TabView - início */
+
+.ui-widget-content a { 
+	
+	color: #071a52;
+}
+
+.ui-state-hover, .ui-widget-content 
+.ui-state-hover, .ui-widget-header 
+.ui-state-hover, .ui-state-focus, 
+.ui-widget-content .ui-state-focus, 
+.ui-widget-header .ui-state-focus {
+
+background: #a7ff83 -webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0.6)),to(rgba(255,255,255,0)));
+
+}
+
+.ui-menu, .ui-menu .ui-menu-child {
+	
+	background: #17b978;
+}
 .ui-tabs .ui-tabs-panel {
     padding: 0.5em 0.2em !important;
 }
@@ -110,14 +149,22 @@ h1 {
     padding: 0px !important;
     background: none !important;
 }
-
-.menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
-    color: #ffffff !important;
+.ui-menu .ui-menu-parent .ui-menu-child {
+	width: 12.5em !important;
+	padding: .1em !important;
 }
 
-.menu-sistema .ui-icon-triangle-1-s {
-    background: url(#{resource['images:seta-para-baixo.png']}) no-repeat;
+.ui-menubar .ui-menuitem-link {
+	
+	padding: .8em !important;
 }
+
+.ui-menubar .ui-menu-child .ui-menuitem-link {
+    
+    width: 86% !important;
+}
+
+
 /* Menu sistema fim */
 
 .ui-state-disabled {
