@@ -15,7 +15,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.planner.empresarial.model.Cargo;
 import com.planner.empresarial.model.Funcionario;
 import com.planner.empresarial.repository.filter.FuncionarioFilter;
 import com.planner.empresarial.service.NegocioException;
@@ -84,10 +83,14 @@ public class Funcionarios implements Serializable {
 		Criteria criteria = session.createCriteria(Funcionario.class);
 
 		if ((!(null == filtro.getId()))) {
-			criteria.add(Restrictions.eq("matricula", filtro.getId()));
+			criteria.add(Restrictions.eq("id", filtro.getId()));
 		}
 		if (StringUtils.isNotBlank(filtro.getNome())) {
 			criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
+		}
+		
+		if ((!(null == filtro.getCargo()))) {
+			criteria.add(Restrictions.eq("cargo", filtro.getCargo()));
 		}
 
 		return criteria.addOrder(Order.asc("nome")).list();

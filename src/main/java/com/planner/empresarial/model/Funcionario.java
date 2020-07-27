@@ -12,9 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.planner.empresarial.interfaces.Promocao;
+
 @Entity
 @Table(name = "funcionario")
-public class Funcionario implements Serializable {
+public class Funcionario implements Serializable, Promocao {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -73,6 +75,16 @@ public class Funcionario implements Serializable {
 
 	public void setSalario(BigDecimal salario) {
 		this.salario = salario;
+	}
+	
+	@Override
+	public void recebePromocao(BigDecimal percentualDePromocao) {
+		calculaPromocao(percentualDePromocao);
+	}
+	
+	private void calculaPromocao(BigDecimal percentualDePromocao) {
+		BigDecimal percentualPromocao = percentualDePromocao.divide(new BigDecimal("100"));
+		this.salario = salario.add(salario.multiply(percentualPromocao));
 	}
 
 	@Override

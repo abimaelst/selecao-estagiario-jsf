@@ -12,17 +12,15 @@ import com.planner.empresarial.model.Cargo;
 import com.planner.empresarial.service.CadastroCargoService;
 import com.planner.empresarial.util.jsf.FacesUtil;
 
-
 @Named
 @ViewScoped
 public class CadastroCargoBean implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private CadastroCargoService cadastroCargoService;
-	
+
 	private PesquisaCargosBean pesquisaCargosBean;
 
 	private Cargo cargo;
@@ -46,7 +44,6 @@ public class CadastroCargoBean implements Serializable {
 		return cargo.getDescricao() != null;
 	}
 
-	
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}

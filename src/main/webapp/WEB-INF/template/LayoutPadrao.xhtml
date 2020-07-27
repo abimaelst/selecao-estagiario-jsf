@@ -53,8 +53,9 @@
 						
 						<p:submenu label="Funcionarios">
 							<p:menuitem value="Novo" icon="pi pi-file" outcome="/funcionarios/CadastroFuncionario"/>
-							<p:menuitem value="Editar" icon="pi pi-pencil"/>
-							<p:menuitem value="Promocação" icon="pi pi-user-plus"/>
+							<p:menuitem value="Editar" icon="pi pi-pencil" outcome="/funcionarios/CadastroFuncionario"/>
+							<p:menuitem value="Promocação" icon="pi pi-user-plus" outcome="/funcionarios/PromocaoFuncionario"/>
+							<p:menuitem value="Promocação por Cargo" icon="pi pi-users" outcome="/promocao/PromocaoPorCargo"/>
 						</p:submenu>
 						
 					</p:submenu>
@@ -84,7 +85,7 @@
 					</p:submenu>
 					
 					<p:submenu label="Pesquisar" icon="pi pi-search">
-						<p:menuitem value="Cargos"/>
+						<p:menuitem value="Cargos" outcome="/cargos/PesquisaCargos"/>
 						<p:menuitem value="Categorias"/>
 						<p:menuitem value="Clientes"/>
 						<p:menuitem value="Funcionários" outcome="/funcionarios/PesquisaFuncionarios"/>
@@ -110,7 +111,7 @@
 
 	<p:separator style="margin-top: 20px" />
 
-	<footer>Sistema Comercial Java EE com CDI, JPA e Primefaces
+	<footer>Sistema Controle Organizacional e Suprimento Java EE com CDI, JPA e Primefaces
 	</footer>
 
 	<script>

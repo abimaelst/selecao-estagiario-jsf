@@ -2,6 +2,8 @@ package com.planner.empresarial.repository.filter;
 
 import java.io.Serializable;
 
+import com.planner.empresarial.model.Cargo;
+
 public class FuncionarioFilter implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -10,6 +12,7 @@ public class FuncionarioFilter implements Serializable{
 	private Long id;
 	private String nome;
 	private String matricula;
+	private Cargo Cargo;
 	
 	
 	public Long getId() {
@@ -29,6 +32,12 @@ public class FuncionarioFilter implements Serializable{
 	}
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
+	}
+	public Cargo getCargo() {
+		return Cargo;
+	}
+	public void setCargo(Cargo cargo) {
+		Cargo = cargo;
 	}
 	
 		

@@ -11,12 +11,13 @@
 		<f:metadata>
 			<o:viewParam name="funcionario"
 				value="#{cadastroFuncionarioBean.funcionario}" />
-			 <f:event listener="#{cadastroFuncionarioBean.inicializar}"
-				type="preRenderView" /> 
-			
+			<f:event listener="#{cadastroFuncionarioBean.inicializar}"
+				type="preRenderView" />
+			<f:event listener="#{pesquisaFuncionariosBean.pesquisar}" type="preRenderView" />
+
 		</f:metadata>
 
-		<h:form>
+		<h:form id="frmCadastro">
 			<h1>#{cadastroFuncionarioBean.editando ? 'Edição de Funcionário'
 				: 'Novo Funcionário'}</h1>
 
@@ -28,7 +29,7 @@
 					<p:commandButton value="Salvar" id="botaoSalvar"
 						action="#{cadastroFuncionarioBean.salvar}" update="@form" />
 				</p:toolbarGroup>
-				
+
 			</p:toolbar>
 
 			<p:panelGrid columns="2" id="painel"
@@ -45,21 +46,21 @@
 
 				<p:outputLabel value="Cargos" for="cargo" />
 				<p:selectOneMenu id="cargo"
-					value="#{cadastroFuncionarioBean.funcionario.cargo}" >
+					value="#{cadastroFuncionarioBean.funcionario.cargo}">
 					<f:selectItem itemLabel="Selecione o cargo" />
 					<f:selectItems value="#{cadastroFuncionarioBean.listCargos}"
 						var="cargos" itemValue="#{cargos}" itemLabel="#{cargos.descricao}" />
 				</p:selectOneMenu>
-				
-				<p:outputLabel value="Salário" for="salario"/>
-	    		<p:inputText id="salario" size="10" maxlength="10" ClassName="moeda"
-	    			value="#{cadastroFuncionarioBean.funcionario.salario}">
-	    			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
-	    		</p:inputText>
+
+				<p:outputLabel value="Salário" for="salario" />
+				<p:inputText id="salario" size="10" maxlength="10" ClassName="moeda"
+					value="#{cadastroFuncionarioBean.funcionario.salario}">
+
+				</p:inputText>
 
 
 			</p:panelGrid>
-			
+
 			<p:dataTable id="funcionariosTable"
 				value="#{cadastroFuncionarioBean.listFuncionarios}"
 				var="funcionario" style="margin-top: 20px"
@@ -67,16 +68,48 @@
 				paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom">
 
-				<p:column headerText="Id" style="text-align: center; width: 100px">
-					<h:outputText value="#{funcionario.id}" />
+				<p:column headerText="Matrícula"
+					style="text-align: center; width: 100px">
+					<h:outputText value="#{funcionario.matricula}" />
 				</p:column>
 
 				<p:column headerText="Nome">
 					<h:outputText value="#{funcionario.nome}" />
 				</p:column>
 
+				<p:column headerText="Cargo">
+					<h:outputText value="#{funcionario.cargo}" />
+				</p:column>
+
+				<p:column headerText="Salario">
+					<h:outputText value="#{funcionario.salario}" />
+				</p:column>
+
+				<p:column style="width: 100px; text-align: center">
+					<p:button outcome="/funcionarios/CadastroFuncionario"
+						icon="ui-icon-pencil" title="Editar">
+						<f:param name="funcionario" value="#{funcionario.id}" />
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
+						update=":frmCadastro:confirmacaoExclusaoDialog">
+						<f:setPropertyActionListener
+							target="#{pesquisaFuncionariosBean.funcionarioSelecionado}"
+							value="#{funcionario}" />
+					</p:commandButton>
+				</p:column>
 			</p:dataTable>
 
+			<p:confirmDialog header="Exclusão de Funcionário"
+				message="Tem certeza que deseja excluir o funcionario #{pesquisaFuncionariosBean.funcionarioSelecionado.id}?"
+				widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">
+				<p:button value="Não"
+					onclick="PF('confirmacaoExclusao').hide(); return false;" />
+				<p:commandButton value="Sim"
+					oncomplete="PF('confirmacaoExclusao').hide();"
+					action="#{pesquisaFuncionariosBean.excluir}" process="@this"
+					update=":frmCadastro:funcionariosTable" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 

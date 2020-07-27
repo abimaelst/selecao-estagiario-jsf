@@ -1,6 +1,7 @@
 package com.planner.empresarial.controller;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
@@ -23,38 +24,33 @@ public class CadastroFuncionarioBean implements Serializable {
 
 	@Inject
 	private CadastroFuncionarioService cadastroFuncionarioService;
-	
+
 	@Inject
 	private Cargos cargos;
-	
+
 	private Cargo cargo;
-	
-	private PesquisaFuncionarioBean pesquisaFuncionarioBean;
+
+	private PesquisaFuncionariosBean pesquisaFuncionarioBean;
 
 	private Funcionario funcionario;
-	
+
 	@Inject
 	private Funcionarios funcionarios;
-	
+
 	private List<Cargo> listCargos;
-	
+
 	private List<Funcionario> listFuncionarios;
-	
-	
-	
-	
-	
 	
 	public CadastroFuncionarioBean() {
 		limpar();
 	}
-	
 
 	public void inicializar() {
-		if (FacesUtil.isNotPostback()) {
+		
 			listCargos = cargos.listOfCargos();
-			listFuncionarios = funcionarios.listOfFuncionarios();			
-		}
+			listFuncionarios = funcionarios.listOfFuncionarios();
+		
+		
 	}
 
 	private void limpar() {
@@ -62,22 +58,38 @@ public class CadastroFuncionarioBean implements Serializable {
 	}
 
 	public void salvar() {
-		
-		this.funcionario = cadastroFuncionarioService.salvar(this.funcionario);
-		limpar();
-		FacesUtil.addInfoMessage("Funcionário salvo com sucesso!");
+
+		if (this.isEditando()) {
+
+			this.funcionario = cadastroFuncionarioService.editar(this.funcionario);
+			limpar();
+			FacesUtil.addInfoMessage("Funcionário Editado com sucesso!");
+
+		} else {
+
+			this.funcionario = cadastroFuncionarioService.salvar(this.funcionario);
+			limpar();
+			FacesUtil.addInfoMessage("Funcionário salvo com sucesso!");
+
+		}
+
 	}
 
 	public boolean isEditando() {
-		return funcionario.getMatricula() != null;
+		return funcionario.getId() != null;
 	}
-	
+
 	public CadastroFuncionarioService getCadastroFuncionarioService() {
 		return cadastroFuncionarioService;
 	}
 
 	public void setCadastroFuncionarioService(CadastroFuncionarioService cadastroFuncionarioService) {
 		this.cadastroFuncionarioService = cadastroFuncionarioService;
+	}
+	
+	public void Promocao(BigDecimal percentual) {
+		
+		funcionario.setSalario(funcionario.getSalario().multiply((new BigDecimal("1.00").add(percentual))));
 	}
 
 	public Cargos getCargos() {
@@ -97,25 +109,23 @@ public class CadastroFuncionarioBean implements Serializable {
 		this.cargo = cargo;
 	}
 
-	public PesquisaFuncionarioBean getPesquisaFuncionarioBean() {
+	public PesquisaFuncionariosBean getPesquisaFuncionarioBean() {
 		return pesquisaFuncionarioBean;
 	}
 
-	public void setPesquisaFuncionarioBean(PesquisaFuncionarioBean pesquisaFuncionarioBean) {
+	public void setPesquisaFuncionarioBean(PesquisaFuncionariosBean pesquisaFuncionarioBean) {
 		this.pesquisaFuncionarioBean = pesquisaFuncionarioBean;
 	}
 
-	
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
-		
-	}	
+
+	}
 
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
-	
-	
+
 	public List<Cargo> getListCargos() {
 		return listCargos;
 	}
@@ -124,17 +134,12 @@ public class CadastroFuncionarioBean implements Serializable {
 		this.listCargos = listCargos;
 	}
 
-
 	public List<Funcionario> getListFuncionarios() {
 		return listFuncionarios;
 	}
 
-
 	public void setListFuncionarios(List<Funcionario> listFuncionarios) {
 		this.listFuncionarios = listFuncionarios;
 	}
-	
-	
 
 }
-

@@ -10,18 +10,26 @@ import com.planner.empresarial.util.jpa.Transactional;
 
 public class CadastroFuncionarioService implements Serializable {
 
-private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;
+
 	@Inject
 	private Funcionarios funcionarios;
-	
+
 	@Transactional
 	public Funcionario salvar(Funcionario funcionario) {
-		Funcionario funcionarioExistente = funcionarios.findMatricula(funcionario.getMatricula()); 
-		
-		if(funcionarioExistente != null && !funcionarioExistente.equals(funcionario)){
-			throw new NegocioException("Já existe um cargo cadastrado com essa descrição. ");
+
+		Funcionario funcionarioExistente = funcionarios.findMatricula(funcionario.getMatricula());
+
+		if (funcionarioExistente != null && !funcionarioExistente.equals(funcionario)) {
+			throw new NegocioException("Já existe um Funcionário cadastrado com essa descrição. ");
 		}
+
+		return funcionarios.guardar(funcionario);
+	}
+
+	@Transactional
+	public Funcionario editar(Funcionario funcionario) {
+
 		return funcionarios.guardar(funcionario);
 	}
 

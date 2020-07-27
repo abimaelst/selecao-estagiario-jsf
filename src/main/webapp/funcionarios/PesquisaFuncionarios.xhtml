@@ -5,18 +5,18 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="titulo">Pesquisa de Fucionarios</ui:define>
+	<ui:define name="titulo">Pesquisa de Fucionários</ui:define>
 
 	<ui:define name="corpo">
 		<h:form id="frmPesquisa">
-			<h1>Pesquisa de Funcionarios</h1>
+			<h1>Pesquisa de Funcionários</h1>
 
 			<p:messages autoUpdate="true" closable="true" />
 
 			<p:toolbar style="margin-top: 20px">
 				<p:toolbarGroup>
 					<p:commandButton value="Pesquisar"
-						action="#{pesquisaFuncionariosBean.pesquisar()}" update="@form" />
+						action="#{pesquisaFuncionariosBean.pesquisar}" update="@form" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Novo" outcome="/funcionarios/CadastroFuncionario" />
@@ -25,6 +25,7 @@
 
 			<p:panelGrid columns="2" id="painel"
 				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				
 				<p:outputLabel value="Id" for="idFuncionario" />
 				<p:inputText id="idFuncionario" size="10"
 					value="#{pesquisaFuncionariosBean.filtro.id}" />
@@ -32,11 +33,7 @@
 				<p:outputLabel value="Nome" for="nome" />
 				<p:inputText id="nome" value="#{pesquisaFuncionariosBean.filtro.nome}"
 					size="60" />
-					
-				<p:outputLabel value="Matrícula" for="matricula" />
-				<p:inputText id="nome" value="#{pesquisaFuncionariosBean.filtro.matricula}"
-					size="60" />
-				
+
 				
 			</p:panelGrid>
 
@@ -49,8 +46,6 @@
 				<p:column headerText="Id" style="text-align: center; width: 100px">
 					<h:outputText value="#{funcionario.id}" />
 				</p:column>
-
-				
 				
 				<p:column headerText="Nome">
 					<h:outputText value="#{funcionario.nome}" />
@@ -61,13 +56,13 @@
 				</p:column>
 				
 				<p:column headerText="Salário">
-					<h:outputText value="#{funcionario.salário}" />
+					<h:outputText value="#{funcionario.salario}" />
 				</p:column>
 				
 				<p:column style="width: 100px; text-align: center">
-					<p:button outcome="/cargos/CadastroFuncionario" icon="ui-icon-pencil"
+					<p:button outcome="/funcionarios/CadastroFuncionario" icon="ui-icon-pencil"
 						title="Editar">
-						<f:param name="cargo" value="#{funcionario.id}" />
+						<f:param name="funcionario" value="#{funcionario.id}" />
 					</p:button>
 					<p:commandButton icon="ui-icon-trash" title="Excluir"
 						oncomplete="PF('confirmacaoExclusao').show()" process="@this"
@@ -79,14 +74,14 @@
 				</p:column>
 			</p:dataTable>
 
-			<p:confirmDialog header="Exclusão de cargo"
+			<p:confirmDialog header="Exclusão de Funcionário"
 				message="Tem certeza que deseja excluir o funcionario #{pesquisaFuncionariosBean.funcionarioSelecionado.id}?"
 				widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">
 				<p:button value="Não"
 					onclick="PF('confirmacaoExclusao').hide(); return false;" />
 				<p:commandButton value="Sim"
 					oncomplete="PF('confirmacaoExclusao').hide();"
-					action="#{pesquisaFuncionaiosBean.excluir}" process="@this"
+					action="#{pesquisaFuncionariosBean.excluir}" process="@this"
 					update=":frmPesquisa:funcionariosTable" />
 			</p:confirmDialog>
 		</h:form>

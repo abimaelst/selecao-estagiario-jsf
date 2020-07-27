@@ -14,7 +14,7 @@ import com.planner.empresarial.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class PesquisaFuncionarioBean implements Serializable {
+public class PesquisaFuncionariosBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class PesquisaFuncionarioBean implements Serializable {
 	private List<Funcionario> funcionariosCadastrados;
 	private Funcionario funcionarioSelecionado;
 	
-	public void PesquisaFuncionariosBean() {
+	public PesquisaFuncionariosBean() {
 		filtro = new FuncionarioFilter();
 	}
 	public void excluir(){
@@ -47,10 +47,7 @@ public class PesquisaFuncionarioBean implements Serializable {
 		return funcionariosFiltrados;
 	}
 	
-	public List<Funcionario> getCargosCadastrados() {
-		return funcionariosCadastrados;
-	}
-	
+		
 	public FuncionarioFilter getFiltro() {
 		return filtro;
 	}
@@ -65,7 +62,7 @@ public class PesquisaFuncionarioBean implements Serializable {
 		return funcionariosCadastrados;
 	}
 	
-	public void setCargoSelecionado(Funcionario funcionarioSelecionado) {
+	public void setFuncionarioSelecionado(Funcionario funcionarioSelecionado) {
 		this.funcionarioSelecionado = funcionarioSelecionado;
 	}
 	public void setFuncionariosCadastrados(List<Funcionario> funcionariosCadastrados) {

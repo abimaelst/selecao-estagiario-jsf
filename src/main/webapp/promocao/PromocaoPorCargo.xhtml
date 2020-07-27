@@ -1,0 +1,104 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">Aplicação de Promoção</ui:define>
+
+	<ui:define name="corpo">
+
+		<f:metadata>
+			
+			<o:viewParam name="funcionario"
+				value="#{cadastroFuncionarioBean.funcionario}" />
+			<f:event listener="#{cadastroFuncionarioBean.inicializar}"
+				type="preRenderView" />
+			<f:event listener="#{promocaoFuncionariosBean.filtrarFuncionariosPromocao}" type="preRenderView" />
+
+		</f:metadata>
+
+
+		<!-- form (seleção de funcionários por cargo) -->
+		<h:form id="formPromocao">
+
+			<h1>Aplicação de Promoção</h1>
+
+			<!-- mensagens -->
+			<p:growl autoUpdate="true" closable="true" />
+
+
+
+			<!-- listbox (para seleção de cargos) -->
+		<p:toolbar style="margin-top: 20px">
+		<p:toolbarGroup>
+						<p:outputLabel value=""
+							for="cargo" />
+						<p:selectOneMenu id="cargo"
+							value="#{promocaoFuncionariosBean.filtro.cargo}" onchange="submit()">
+							<f:selectItem itemLabel="Selecione o cargo" />
+							<f:selectItems value="#{cadastroFuncionarioBean.listCargos}"
+								var="cargos" itemValue="#{cargos}"
+								itemLabel="#{cargos.descricao}" />
+						</p:selectOneMenu>
+		</p:toolbarGroup>
+		</p:toolbar>
+
+
+		</h:form>
+
+		<!-- form (tabela de funcionários com ação para lançar percentual de aumento no salário) -->
+		<h:form id="promocoesTable">
+
+			<!-- datatable -->
+			<p:dataTable style="margin-top: 20px"
+				value="#{promocaoFuncionariosBean.funcionariosPromocao}"
+				var="funcionario" emptyMessage="Nenhum funcionário encontrado."
+				rows="10" paginatorPosition="bottom" paginator="true"
+				paginatorAlwaysVisible="false">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<div align="left">
+							<!-- input (para entrada de percentual) -->
+							<p:outputLabel for="percentual" value="Percentual de aumento % " />
+							<p:inputText id="percentual" size="10" maxlength="10"
+								style="width:150px;" styleClass="moeda"
+								value="#{promocaoFuncionariosBean.percentualDePromocao}">
+								<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+							</p:inputText>
+							<p:commandButton value="Calcular"
+								actionListener="#{promocaoFuncionariosBean.aumentarSalarios}" update="@form" />
+
+						</div>
+					</p:outputPanel>
+				</f:facet>
+
+				<!-- colunas -->
+				<p:column headerText="Nome" sortBy="#{funcionario.nome}"
+					style="text-align: center;">
+					<h:outputText value="#{funcionario.nome}" />
+				</p:column>
+
+				<p:column headerText="Matrícula" sortBy="#{funcionario.matricula}"
+					style="text-align: center;">
+					<h:outputText value="#{funcionario.matricula}" />
+				</p:column>
+
+				<p:column headerText="Cargo" sortBy="#{funcionario.cargo.descricao}"
+					style="text-align: center;">
+					<h:outputText value="#{funcionario.cargo.descricao}" />
+				</p:column>
+
+				<p:column headerText="Salário" sortBy="#{funcionario.salario}"
+					style="text-align: center;">
+					<h:outputText value="#{funcionario.salario}">
+						<f:convertNumber type="currency" />
+					</h:outputText>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
